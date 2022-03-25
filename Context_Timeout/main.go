@@ -24,14 +24,9 @@ func main() {
 	//这是一个空的context
 	ctx := context.Background()
 	//接着使用cancel
-	ctx, cancel := context.WithCancel(ctx)
-
+	ctx, cancel := context.WithTimeout(ctx, time.Second*2)
 	// 创建一个进程去执行 cancel，2秒后
-
-	go func() {
-		time.Sleep(2 * time.Second)
-		cancel()
-	}()
+	defer cancel()
 
 	doSomething(ctx)
 
